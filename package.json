@@ -12,7 +12,7 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "dev": "nodemon server/index.js"
+    "start-dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
