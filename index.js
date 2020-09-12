@@ -7,9 +7,6 @@ const   express   = require('express'),
         server    = require('./server'),
         routes    = require('./routes'),
         app       = express()
-
-        
-
 /*
 * Running server
 */

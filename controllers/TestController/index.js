@@ -4,6 +4,11 @@ const TestController = ({ /* . . . */ }) => ({
 
 		res.send('Welcome to ecommerce api')
 		
+      },
+      sayBye : async ( req, res ) => {
+
+		res.send('Good bye')
+		
       }
 })
 
