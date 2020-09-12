@@ -3,6 +3,7 @@
 */
 const   express   = require('express'),
         mongoose  = require('mongoose'),
+        jwt       = require('jsonwebtoken'),
         loaders   = require('./loaders'),
         server    = require('./server'),
         routes    = require('./routes'),
@@ -10,4 +11,4 @@ const   express   = require('express'),
 /*
 * Running server
 */
-server({ app , routes , mongoose, loaders })
+server({ app , routes , mongoose, loaders, jwt })
