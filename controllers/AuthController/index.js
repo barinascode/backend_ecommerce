@@ -1,7 +1,7 @@
 const Users = require("../../models/Users");
 const jwtkey = "myjwtpassword123";
 
-const Auth = ({ mongoose, jwt, app }) => ({
+const Auth = ({ jwt, app }) => ({
   login: async (req, res) => {
     const { email, password } = req.body;
 
