@@ -12,9 +12,7 @@ const routes = ({ app, handlersControllers }) => {
 
     app.post( '/api/register', AuthController.register)
 
-    app.post( '/api/append-cart/:userID/:productID', CartController.appendProduct)
-
-    app.post( '/api/save-post', ProductsController.saveProduct)
+    app.post( '/api/save-product', ProductsController.saveProduct)
 
     app.get( '/api/get-products', ProductsController.getProducts)
 
@@ -23,6 +21,18 @@ const routes = ({ app, handlersControllers }) => {
     app.put( '/api/update-product/:id', ProductsController.updateProduct)
 
     app.delete( '/api/delete-product/:id', ProductsController.deleteProduct)
+
+    app.post( '/api/append-cart/:userID/:productID', CartController.appendProduct)
+
+    app.get( '/api/get-cart/:id', CartController.getCart)
+
+    app.delete( '/api/delete-cart/:id', CartController.deleteCart)
+
+    app.delete( '/api/delete-one-cart/:userID/:productID', CartController.deleteOneCart)
+
+    app.get( '/api/verify-one-cart/:userID/:productID', CartController.verifyOneCart)
+
+    app.get( '/api/verify-cart/:id', CartController.verifyCart)
 
 }
 
