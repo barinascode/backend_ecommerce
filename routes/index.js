@@ -2,9 +2,11 @@ const ProductControllers = require("../controllers/ProductsController")
 
 const routes = ({ app, handlersControllers }) => {
 
-    const { TestController, AuthController, CartController, ProductsController } = handlersControllers
+    const { TestController, AuthController, CartController, ProductsController, handlerPayment } = handlersControllers
     
     app.get( '/api/say-welcome', TestController.sayWelcome)
+
+    app.post( '/api/paypal', handlerPayment.payment)
 
     app.get( '/api/say-bye', TestController.sayBye)
     
