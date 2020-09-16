@@ -1,8 +1,7 @@
-const ProductControllers = require("../controllers/ProductsController")
 
 const routes = ({ app, handlersControllers }) => {
 
-    const { TestController, AuthController, CartController, ProductsController, handlerPayment } = handlersControllers
+    const { TestController, AuthController, CartController, ProductsController, handlerPayment, RatingController } = handlersControllers
     
     app.get( '/api/say-welcome', TestController.sayWelcome)
 
@@ -35,6 +34,8 @@ const routes = ({ app, handlersControllers }) => {
     app.get( '/api/verify-one-cart/:userID/:productID', CartController.verifyOneCart)
 
     app.get( '/api/verify-cart/:id', CartController.verifyCart)
+
+    app.post("/api/calificate/:id", RatingController.calificate)
 
 }
 
