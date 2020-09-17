@@ -1,10 +1,12 @@
 const Product = require("../../models/Products");
+const Users = require("../../models/Users");
 
 const ratingController = () => ({
 
     calificate: async (req, res) => {
-        productID = req.params.id;
-        
+        productID = req.params.productID;
+        userID = req.params.userID;
+
         const product = await Product.findById(productID);
         product.calificates.push(req.body.rating);
 
@@ -25,12 +27,50 @@ const ratingController = () => ({
             if(decimal == 0.3 || decimal == 0.4) product.rating = ratingRound + 0.5;
         }
        
-        await Product.findByIdAndUpdate(productID, product, {new: true}, (err, product) => {
+        await Product.findByIdAndUpdate(productID, product, {new: true}, async (err, product) => {
             if(err) return res.status(500).send("Error al agregar la puntuación");
 
             if(!product) return res.status(404).send("Los datos del producto no son válidos");
 
-            if(product) return res.status(200).send(product)
+            if(product){
+                const user = await Users.findById(userID);
+
+                if(user){
+                    
+                    user.productsRating.push({productID: product._id, rating: product.rating});
+
+                    await Users.findByIdAndUpdate(userID, user, {new: true}, (err, user) => {
+                        if(err) return res.status(500).send("Error al guardar puntuación");
+
+                        if(!user) return res.status(404).send("Los datos del usuario no son válidos");
+
+                        if(user) return res.status(200).send({user, product});
+                    })
+                }
+            }
+        })
+    },
+    detectedCalificate: async (req, res) => {
+        const userID = req.params.userID;
+        const productID = req.params.productID;
+
+        await Users.findById(userID, (err, user) => {
+            if(err) return res.status(500).send("Error al buscar usuario");
+
+            if(!user) return res.status(404).send("Los datos del usuario no son válidos");
+
+            if(user){
+                
+                try{
+                    user.productsRating.forEach(element => {
+                        if(element.productID == productID){
+                            return res.status(200).send({rating: element.rating});
+                        }
+                    })
+                } catch(err){
+                    return res.status(200).send({rating: false});
+                }
+            }
         })
     }
 })

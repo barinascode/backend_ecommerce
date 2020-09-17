@@ -6,7 +6,8 @@ const userSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String , required: true },
     phone: { type: String , required: true },
-    cart: {type: [Schema.ObjectId], ref: "Product", default: null}
+    cart: {type: [Schema.ObjectId], ref: "Product", default: null},
+    productsRating: {type: [], default: []}
 },
 {
     versionKey: false,

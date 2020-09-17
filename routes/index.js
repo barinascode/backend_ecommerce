@@ -35,7 +35,9 @@ const routes = ({ app, handlersControllers }) => {
 
     app.get( '/api/verify-cart/:id', CartController.verifyCart)
 
-    app.post("/api/calificate/:id", RatingController.calificate)
+    app.post("/api/calificate/:productID/:userID", RatingController.calificate)
+
+    app.get("/api/verify-calificate/:productID/:userID", RatingController.detectedCalificate)
 
 }
 
