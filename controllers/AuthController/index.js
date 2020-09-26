@@ -14,14 +14,25 @@ const Auth = ({ jwt, app }) => ({
         return;
       }
 
-      const token = jwt.sign({ id: account._id }, jwtkey, {
-        expiresIn: 86400,
-      });
 
-      res
+      const modelUser = new Users();
+
+      if(modelUser.comparePassword(password, account.password)){
+        
+        const token = jwt.sign({ id: account._id }, jwtkey, {
+          expiresIn: 86400,
+        });
+
+        res
         .status(200)
         .json({token})
         .end();
+      } else {
+        res
+        .status(404)
+        .json({error: "Password incorrect"})
+        .end();
+      }
     } catch (error) {
       console.log(error);
       res.status(403).end();
@@ -31,7 +42,6 @@ const Auth = ({ jwt, app }) => ({
 
 
   register: async (req, res) => {
-    const { email, roles } = req.body;
     
     try {
       const payload = {
@@ -45,7 +55,9 @@ const Auth = ({ jwt, app }) => ({
         verification_code,
       });
 
-      if (roles) {
+      user.password = await user.encryptPassword(req.body.password);
+
+      if (req.body.roles) {
         const rolesFound = await Role.findOne({ name: 'admin' })
         user.roles = [rolesFound._id]
       } else {
